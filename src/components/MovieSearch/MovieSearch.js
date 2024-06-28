@@ -7,7 +7,9 @@ import {
   Grid,
   Typography,
   Container,
+  InputAdornment,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 import MovieCard from "./MovieCard";
 import useDebounce from "../../hooks/useDebounce";
@@ -59,16 +61,62 @@ const MovieSearch = () => {
   }, [debouncedQuery, setMovies, setLoading, setError]);
 
   return (
-    <Container sx={{ p: 4 }}>
+    <Container>
       <TextField
         label="Search for a movie..."
         variant="outlined"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        style={{ marginBottom: "20px", width: "100%" }}
+        autoComplete='off'
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon sx={{ color: "#fff" }} />
+            </InputAdornment>
+          ),
+          style: {
+            color: "#fff",
+          },
+        }}
+        InputLabelProps={{
+          style: {
+            color: "#bbb",
+          },
+          focused: {
+            color: "#fff",
+          },
+        }}
+        sx={{
+          width: "100%",
+          backgroundColor: "#333",
+          borderRadius: "4px",
+          marginBottom: "2rem",
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#e50914",
+            },
+            "&:hover fieldset": {
+              borderColor: "#e50914",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#e50914",
+            },
+          },
+        }}
       />
-      {loading && <CircularProgress />}
+
+      {loading && <CircularProgress color="inherit" />}
       {error && <Typography color="error">{error}</Typography>}
+      {!loading && !error && !movies?.length && query && (
+        <Typography
+          variant="h5"
+          color="error"
+          align="center"
+          style={{ margin: "2rem 0" }}
+        >
+          No movies found for <strong>{query}</strong>.
+        </Typography>
+      )}
       <Grid container spacing={3}>
         {movies.map((movie) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
