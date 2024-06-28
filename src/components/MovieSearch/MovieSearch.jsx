@@ -14,8 +14,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import MovieCard from "./MovieCard";
 import useDebounce from "../../hooks/useDebounce";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-const API_KEY = process.env.REACT_APP_API_KEY;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 const MovieSearch = () => {
   const { movies, setMovies, loading, setLoading, error, setError } =
@@ -81,10 +81,7 @@ const MovieSearch = () => {
         InputLabelProps={{
           style: {
             color: "#bbb",
-          },
-          focused: {
-            color: "#fff",
-          },
+          }
         }}
         sx={{
           width: "100%",
